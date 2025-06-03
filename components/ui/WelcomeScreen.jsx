@@ -1,16 +1,16 @@
 import React from 'react'
 import {
-    Dimensions,
-    Image,
-    ImageBackground,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Dimensions,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native'
 import {
-    heightPercentageToDP as hp,
-    widthPercentageToDP as wp
+  heightPercentageToDP as hp,
+  widthPercentageToDP as wp
 } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -26,9 +26,9 @@ const WelcomeScreen = () => {
       >
         <TouchableOpacity
           style={styles.backButton}
-          onPress={() => console.log('Back pressed')} // Replace with navigation.goBack()
+          onPress={() => console.log('Back pressed')}
         >
-           <AntDesign name="left" size={20}/>
+          <AntDesign name='left' size={20} />
         </TouchableOpacity>
         <View style={styles.logoBox}>
           <Image
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
     left: wp('4%'),
     zIndex: 10,
     padding: 8,
-    backgroundColor:'#fff',
-    borderRadius: wp("2%")
+    backgroundColor: '#fff',
+    borderRadius: wp('2%')
   },
   backButtonText: {
     color: '#000',

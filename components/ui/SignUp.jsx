@@ -58,7 +58,7 @@ const SignUp = () => {
       Alert.alert('Error', 'Passwords do not match')
       return
     }
-   navigation.navigate('WelcomeScreen')
+   navigation.navigate('OTPVerification')
   }
 
   const handleLogin = () => {
@@ -87,12 +87,10 @@ const SignUp = () => {
       </ImageBackground>
 
       <View style={styles.innerContainer}>
-        {/* Header */}
+       
         <Text style={styles.header}>Sign Up</Text>
-
-        {/* Form Container with Blue Dotted Border */}
         <View style={styles.formContainer}>
-          {/* Contact Number */}
+          
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -104,7 +102,6 @@ const SignUp = () => {
             />
           </View>
 
-          {/* Email */}
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.input}
@@ -117,7 +114,6 @@ const SignUp = () => {
             />
           </View>
 
-          {/* First Name and Last Name Row */}
           <View style={styles.nameRow}>
             <View style={[styles.inputContainer, styles.halfWidth]}>
               <TextInput
@@ -139,7 +135,6 @@ const SignUp = () => {
             </View>
           </View>
 
-          {/* Password */}
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -161,7 +156,6 @@ const SignUp = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Confirm Password */}
           <View style={styles.inputContainer}>
             <TextInput
               style={styles.passwordInput}
@@ -185,7 +179,6 @@ const SignUp = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Forgot Password Link */}
           <TouchableOpacity
             onPress={handleForgotPassword}
             style={styles.forgotPasswordContainer}
@@ -194,12 +187,10 @@ const SignUp = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Sign Up Button */}
         <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
           <Text style={styles.signUpButtonText}>Sign up</Text>
         </TouchableOpacity>
 
-        {/* Login Link */}
         <View style={styles.loginContainer}>
           <Text style={styles.loginText}>Already havean account , </Text>
           <TouchableOpacity onPress={handleLogin}>
@@ -235,7 +226,6 @@ const styles = StyleSheet.create({
   innerContainer: {
     flex: 1,
     paddingHorizontal: wp('6%'),
-    // paddingTop: hp('8%'),
     paddingBottom: hp('4%'),
     alignItems: 'center'
   },
@@ -243,26 +233,15 @@ const styles = StyleSheet.create({
     fontSize: wp('7%'),
     fontWeight: 'bold',
     color: '#000',
-    // marginBottom: hp('4%'),
     textAlign: 'center'
   },
   formContainer: {
     width: '100%',
-    // borderWidth: 2,
-    // borderColor: '#4A90E2',
-    // borderStyle: 'dashed',
     borderRadius: wp('2%'),
-    padding: wp('4%'),
-    // marginBottom: hp('4%')
+    padding: wp('4%')
   },
   inputContainer: {
     marginBottom: hp('1.5%')
-    // borderWidth: 1,
-    // borderColor: 'gray',
-    // borderRadius: 8,
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#4A90E2',
-    // borderStyle: 'dashed'
   },
   input: {
     height: hp('6%'),
@@ -307,7 +286,6 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     fontSize: wp('3.5%'),
     color: '#888'
-    // textDecorationLine: 'underline'
   },
   signUpButton: {
     backgroundColor: '#000',

@@ -29,7 +29,6 @@ const OTPVerification = () => {
 
     setOtp(newOtp)
 
-    // Auto focus next input
     if (value !== '' && index < 4) {
       inputRefs.current[index + 1]?.focus()
     }
@@ -48,15 +47,11 @@ const OTPVerification = () => {
       Alert.alert('Error', 'Please enter complete OTP code')
       return
     }
-
-    console.log('OTP Code:', otpCode)
-    // Handle OTP verification logic here
-    // navigation.navigate('NextScreen')
+    navigation.navigate('SelectFavorites')
   }
 
   const handleResendCode = () => {
     console.log('Resending OTP code...')
-    // Handle resend OTP logic
     navigation.navigate("")
     Alert.alert('Success', 'OTP code has been resent to your email/mobile')
   }
@@ -75,16 +70,13 @@ const OTPVerification = () => {
         <AntDesign name='left' size={20} />
       </TouchableOpacity>
       <View style={styles.innerContainer}>
-        {/* Header */}
         <Text style={styles.header}>OTP</Text>
 
-        {/* Subtitle */}
         <Text style={styles.subText}>
           we send you an Code Please check your Mail{'\n'}
           /Mobile to Complete Otp Code
         </Text>
 
-        {/* OTP Input Fields */}
         <View style={styles.otpContainer}>
           {otp.map((digit, index) => (
             <TextInput
@@ -104,7 +96,6 @@ const OTPVerification = () => {
           ))}
         </View>
 
-        {/* Confirm Button */}
         <TouchableOpacity
           style={[
             styles.confirmButton,
@@ -116,7 +107,6 @@ const OTPVerification = () => {
           <Text style={styles.confirmText}>Confirm</Text>
         </TouchableOpacity>
 
-        {/* Resend Code */}
         <TouchableOpacity
           onPress={handleResendCode}
           style={styles.resendContainer}

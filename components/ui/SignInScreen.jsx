@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import {
   Image,
@@ -8,13 +9,15 @@ import {
   TouchableOpacity,
   View
 } from 'react-native'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const SignInScreen = () => {
+  const navigation = useNavigation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   const handleSignIn = () => {
-    console.log('Sign in attempted with:', { email, password })
+    navigation.navigate("WelcomeScreen")
   }
 
   const handleSocialLogin = provider => {
@@ -22,24 +25,26 @@ const SignInScreen = () => {
   }
 
   const handleForgotPassword = () => {
-    console.log('Forgot password clicked')
+    navigation.navigate('ForgotPass')
   }
 
   const handleSignUp = () => {
-    console.log('Sign up clicked')
+    navigation.navigate('SignUp')
   }
 
   const handleBack = () => {
-    console.log('Back button clicked')
+    navigation.navigate('OnboardingScreen')
   }
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Header with back arrow */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-          <Text style={styles.backArrow}>←</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+                  style={styles.backButton}
+                  onPress={() => handleBack}
+                >
+                  <AntDesign name='left' size={20} />
+                </TouchableOpacity>
       </View>
 
       <View style={styles.content}>
@@ -53,10 +58,8 @@ const SignInScreen = () => {
           </View>
         </View>
 
-        {/* Sign In Title */}
         <Text style={styles.title}>Sign In</Text>
 
-        {/* Input Fields */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -77,7 +80,6 @@ const SignInScreen = () => {
             secureTextEntry
           />
 
-          {/* Forgot Password */}
           <TouchableOpacity
             onPress={handleForgotPassword}
             style={styles.forgotPassword}
@@ -86,19 +88,16 @@ const SignInScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Sign In Button */}
         <TouchableOpacity style={styles.signInButton} onPress={handleSignIn}>
           <Text style={styles.signInButtonText}>Sign In</Text>
         </TouchableOpacity>
 
-        {/* Divider */}
         <View style={styles.dividerContainer}>
           <View style={styles.dividerLine} />
           <Text style={styles.dividerText}>or</Text>
           <View style={styles.dividerLine} />
         </View>
 
-        {/* Social Login Buttons */}
         <View style={styles.socialContainer}>
           <TouchableOpacity
             style={styles.socialButton}
@@ -128,7 +127,6 @@ const SignInScreen = () => {
           </TouchableOpacity>
         </View>
 
-        {/* Sign Up Link */}
         <View style={styles.signUpContainer}>
           <Text style={styles.signUpText}>Don't have an account, </Text>
           <TouchableOpacity onPress={handleSignUp}>
@@ -153,14 +151,15 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    top:15
   },
   logo: {
     alignItems: 'center'
   },
   imagelogo: {
     height: 150,
-    width: 150
+    width: 150,
   },
   backArrow: {
     fontSize: 24,

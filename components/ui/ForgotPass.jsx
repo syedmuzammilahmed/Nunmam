@@ -22,7 +22,7 @@ const ForgotPass = () => {
   const [email, setEmail] = useState('')
 
   const handleSend = () => {
-    console.log('Send reset link to:', email)
+     navigation.navigate('OTPVerification')
   }
 
   return (
@@ -38,13 +38,6 @@ const ForgotPass = () => {
         >
           <AntDesign name='left' size={20} />
         </TouchableOpacity>
-        {/* <View style={styles.logoBox}>
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo}
-            resizeMode='contain'
-          />
-        </View> */}
       </ImageBackground>
 
       <View style={styles.innerContainer}>
@@ -182,7 +175,7 @@ const styles = StyleSheet.create({
     fontSize: wp('3.5%'),
     color: '#888',
     position: 'absolute',
-    bottom: hp('4%'), // instead of marginTop
+    bottom: hp('4%'), 
     width: '100%',
     textAlign: 'center',
     flexDirection: 'row'
@@ -192,25 +185,27 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
     textDecorationLine: 'underline',
-    marginLeft: 4 // instead of top
+    marginLeft: 4 
   },
 
   innerContainer: {
     flex: 1,
-    marginTop: hp('8%'), // changed from 18%
+    marginTop: hp('8%'), 
     paddingHorizontal: wp('8%'),
-    width: '100%'
+    width: '100%',
   },
 
   header: {
     fontSize: wp('6.5%'),
     fontWeight: 'bold',
     marginBottom: hp('1.5%'),
-    color: '#000'
+    color: '#000',
+    alignSelf:'center'
   },
   subText: {
     fontSize: wp('3.5%'),
     color: '#666',
+    alignSelf:'center',
     marginBottom: hp('4%')
   },
   input: {

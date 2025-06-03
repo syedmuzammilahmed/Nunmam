@@ -21,7 +21,6 @@ const SelectFavorites = () => {
   const navigation = useNavigation()
   const [selectedItems, setSelectedItems] = useState([])
 
-  // Tamil literature categories
   const categories = [
     'அத்துமாற',
     'தொல்காப்பியம்',
@@ -43,8 +42,7 @@ const SelectFavorites = () => {
   }
 
   const handleConfirm = () => {
-    console.log('Selected favorites:', selectedItems)
-    // Navigate to next screen or handle confirmation
+    navigation.navigate('WelcomeScreen')
   }
 
   const renderCategoryItem = (item, index) => {
@@ -80,15 +78,12 @@ const SelectFavorites = () => {
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
         <Text style={styles.header}>Select Your Favorites</Text>
 
-        {/* Categories Grid */}
         <View style={styles.categoriesContainer}>
           {categories.map((item, index) => renderCategoryItem(item, index))}
         </View>
 
-        {/* Confirm Button */}
         <TouchableOpacity
           style={[
             styles.confirmButton,
