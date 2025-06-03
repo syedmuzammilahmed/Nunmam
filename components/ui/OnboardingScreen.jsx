@@ -92,34 +92,34 @@ const OnboardingScreens = () => {
         </View>
       )
     },
-    {
-      backgroundColor: '#000',
-      content: (
-        <View style={styles.centerContent1}>
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo}
-            resizeMode='contain'
-          />
-        </View>
-      )
-    },
     // {
-    //   backgroundColor: '#fff',
+    //   backgroundColor: '#000',
     //   content: (
-    //     <View style={styles.centerContent}>
+    //     <View style={styles.centerContent1}>
     //       <Image
     //         source={require('../../assets/images/nunmamLogo.png')}
     //         style={styles.imagelogo}
     //         resizeMode='contain'
     //       />
-    //       <Text style={styles.tamiltext}>
-    //         தமிழ் வரலாறு கதைகள் மற்றும்{'\n'}
-    //         இலக்கணங்களின் தொகுப்பு
-    //       </Text>
     //     </View>
     //   )
     // },
+    {
+      backgroundColor: '#fff',
+      content: (
+        <View style={styles.centerContent}>
+          <Image
+            source={require('../../assets/images/nunmamLogo.png')}
+            style={styles.imagelogo}
+            resizeMode='contain'
+          />
+          <Text style={styles.tamiltext}>
+            தமிழ் வரலாறு கதைகள் மற்றும்{'\n'}
+            இலக்கணங்களின் தொகுப்பு
+          </Text>
+        </View>
+      )
+    },
     {
       backgroundColor: '#fff',
       content: (
