@@ -1,29 +1,41 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import ForgotPass from "../components/ui/ForgotPass";
+import KScreen from "../components/ui/KScreen";
+import NunmamInfoScreen from "../components/ui/NunmamInfoScreen";
+import OTPVerification from "../components/ui/OTPVerification";
+import SelectFavorites from "../components/ui/SelectFavorites";
+import SignUp from "../components/ui/SignUp";
+import SignInScreen from "../components/ui/SignInScreen";
+import  OnboardingScreen from "../components/ui/OnboardingScreen";
+import WelcomeScreen from "../components/ui/WelcomeScreen";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
+const Stack = createStackNavigator();
 
+export default function App(){
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+  <NavigationIndependentTree>
+  <NavigationContainer>
+
+    <Stack.Navigator initialRouteName={"SignInScreen"} >
+     
+    <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="KScreen" component={KScreen} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="NunmamInfoScreen" component={NunmamInfoScreen} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="ForgotPass" component={ForgotPass} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="SelectFavorites" component={SelectFavorites} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="OTPVerification" component={OTPVerification} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }}></Stack.Screen> 
+    <Stack.Screen name="SignInScreen" component={SignInScreen} options={{ headerShown: false }}></Stack.Screen> 
+
+
+    </Stack.Navigator>  
+
+
+  </NavigationContainer>
+  </NavigationIndependentTree>
+  )
 }
