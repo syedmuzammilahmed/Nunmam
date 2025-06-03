@@ -1,14 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
+    Dimensions,
+    Image,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
@@ -18,29 +18,8 @@ const OnboardingScreens = () => {
   const scrollViewRef = useRef(null)
 
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [timer, setTimer] = useState(2)
 
   const totalScreens = 6
-
-  useEffect(() => {
-    let interval
-
-    if (currentIndex < 3 && timer > 0) {
-      interval = setInterval(() => {
-        setTimer(prev => prev - 1)
-      }, 1000)
-    } else if (currentIndex < 3 && timer === 0) {
-      handleNext()
-    }
-
-    return () => clearInterval(interval)
-  }, [timer, currentIndex])
-
-  useEffect(() => {
-    if (currentIndex < 3) {
-      setTimer(2)
-    }
-  }, [currentIndex])
 
   const handleNext = () => {
     if (currentIndex < totalScreens - 1) {
@@ -50,21 +29,19 @@ const OnboardingScreens = () => {
     }
   }
 
+  const handleSkip = () => {
+    navigation.navigate('SignUp')
+  }
+
   const handleGetStarted = () => {
     navigation.navigate('SignUp')
   }
 
   const handleScrollUpdate = event => {
-    if (currentIndex >= 3) {
-      const scrollX = event.nativeEvent.contentOffset.x
-      const newIndex = Math.round(scrollX / width)
-      if (
-        newIndex !== currentIndex &&
-        newIndex >= 3 &&
-        newIndex < totalScreens
-      ) {
-        setCurrentIndex(newIndex)
-      }
+    const scrollX = event.nativeEvent.contentOffset.x
+    const newIndex = Math.round(scrollX / width)
+    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < totalScreens) {
+      setCurrentIndex(newIndex)
     }
   }
 
@@ -170,7 +147,7 @@ const OnboardingScreens = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        scrollEnabled={currentIndex >= 3}
+        scrollEnabled={true}
         onScroll={handleScrollUpdate}
         onMomentumScrollEnd={handleScrollUpdate}
         scrollEventThrottle={16}
@@ -185,6 +162,68 @@ const OnboardingScreens = () => {
           </View>
         ))}
       </ScrollView>
+
+      {/* Bottom Navigation Buttons */}
+      {currentIndex < totalScreens - 1 && (
+        <View style={styles.bottomNavigation}>
+          <TouchableOpacity
+            style={[
+              styles.navButton,
+              styles.skipButton,
+              { borderColor: currentIndex < 3 ? '#fff' : '#000' }
+            ]}
+            onPress={handleSkip}
+          >
+            <Text
+              style={[
+                styles.skipButtonText,
+                { color: currentIndex < 3 ? '#fff' : '#000' }
+              ]}
+            >
+              Skip
+            </Text>
+          </TouchableOpacity>
+
+          <View style={styles.dotsContainer}>
+            {screens.map((_, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.dot,
+                  {
+                    backgroundColor:
+                      index === currentIndex
+                        ? currentIndex < 3
+                          ? '#fff'
+                          : '#000'
+                        : currentIndex < 3
+                        ? '#666'
+                        : '#ccc'
+                  }
+                ]}
+              />
+            ))}
+          </View>
+
+          <TouchableOpacity
+            style={[
+              styles.navButton,
+              styles.nextButton,
+              { backgroundColor: currentIndex < 3 ? '#fff' : '#000' }
+            ]}
+            onPress={handleNext}
+          >
+            <Text
+              style={[
+                styles.nextButtonText,
+                { color: currentIndex < 3 ? '#000' : '#fff' }
+              ]}
+            >
+              Next
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   )
 }
@@ -301,6 +340,47 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16
+  },
+  bottomNavigation: {
+    position: 'absolute',
+    bottom: 50,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 30
+  },
+  navButton: {
+    borderRadius: 25,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    minWidth: 80,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  skipButton: {
+    borderWidth: 1,
+    backgroundColor: 'transparent'
+  },
+  
+  skipButtonText: {
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  nextButtonText: {
+    fontSize: 16,
+    fontWeight: '500'
+  },
+  dotsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    marginHorizontal: 4
   }
 })
 
