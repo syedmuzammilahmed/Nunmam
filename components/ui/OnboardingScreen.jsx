@@ -1,14 +1,14 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useRef, useState } from 'react'
 import {
-    Dimensions,
-    Image,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Dimensions,
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native'
 
 const { width, height } = Dimensions.get('window')
@@ -92,18 +92,18 @@ const OnboardingScreens = () => {
         </View>
       )
     },
-    // {
-    //   backgroundColor: '#000',
-    //   content: (
-    //     <View style={styles.centerContent1}>
-    //       <Image
-    //         source={require('../../assets/images/nunmamLogo.png')}
-    //         style={styles.imagelogo}
-    //         resizeMode='contain'
-    //       />
-    //     </View>
-    //   )
-    // },
+    {
+      backgroundColor: '#000',
+      content: (
+        <View style={styles.centerContent}>
+          <Image
+            source={require('../../assets/images/nunmamLogo.png')}
+            style={styles.imagelogo}
+            resizeMode='contain'
+          />
+        </View>
+      )
+    },
     {
       backgroundColor: '#fff',
       content: (
@@ -135,15 +135,17 @@ const OnboardingScreens = () => {
       backgroundColor: '#fff',
       content: (
         <View style={styles.centerContent}>
-        
-            <Image
+          <Image
             source={require('../../assets/images/nunmamLogo.png')}
             style={styles.imagelogo2}
             resizeMode='contain'
           />
-        <View style={{width:"100%", height:5, backgroundColor:'black',}}></View>
+          <View
+            style={{ width: '100%', height: 5, backgroundColor: 'black' }}
+          ></View>
           <Text style={styles.brandSubText}>
-            Lorem ipsum dolor sit amet consectetur. Tincidunt in blandit id donec, aenean libero. Hendrerit nibh suspendisse.
+            Lorem ipsum dolor sit amet consectetur. Tincidunt in blandit id
+            donec, aenean libero. Hendrerit nibh suspendisse.
           </Text>
           <TouchableOpacity
             style={styles.getStartedButton}
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
   centerContent2: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30,
+    padding: 30
   },
   centerContent1: {
     justifyContent: 'center',
@@ -230,7 +232,7 @@ const styles = StyleSheet.create({
   imagelogo2: {
     height: 150,
     width: 150,
-    top:-150
+    top: -150
   },
   logo: {
     width: 100,
@@ -290,10 +292,10 @@ const styles = StyleSheet.create({
     marginTop: 60,
     backgroundColor: '#000',
     borderRadius: 25,
-    width:250,
-    height:50,
-    alignItems:'center',
-    justifyContent:'center'
+    width: 250,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   getStartedText: {
     color: '#fff',
