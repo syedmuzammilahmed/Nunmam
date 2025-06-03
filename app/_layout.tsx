@@ -1,12 +1,13 @@
 import { NavigationContainer, NavigationIndependentTree } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Animation from "../components/ui/Animation";
 import ForgotPass from "../components/ui/ForgotPass";
 import NunmamInfoScreen from "../components/ui/NunmamInfoScreen";
+import OnboardingScreen from "../components/ui/OnboardingScreen";
 import OTPVerification from "../components/ui/OTPVerification";
 import SelectFavorites from "../components/ui/SelectFavorites";
-import SignUp from "../components/ui/SignUp";
 import SignInScreen from "../components/ui/SignInScreen";
-import  OnboardingScreen from "../components/ui/OnboardingScreen";
+import SignUp from "../components/ui/SignUp";
 import WelcomeScreen from "../components/ui/WelcomeScreen";
 
 
@@ -21,6 +22,7 @@ export default function App(){
     <Stack.Navigator initialRouteName={"OnboardingScreen"} >
      
      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} options={{ headerShown: false }}></Stack.Screen>
+     {/* <Stack.Screen name="Animation" component={Animation} options={{ headerShown: false }}></Stack.Screen> */}
     <Stack.Screen name="NunmamInfoScreen" component={NunmamInfoScreen} options={{ headerShown: false }}></Stack.Screen> 
     <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{ headerShown: false }}></Stack.Screen> 
     <Stack.Screen name="ForgotPass" component={ForgotPass} options={{ headerShown: false }}></Stack.Screen> 

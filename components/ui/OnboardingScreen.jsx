@@ -1,334 +1,354 @@
-import { useNavigation } from '@react-navigation/native'
-import React, { useRef, useState } from 'react'
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useRef } from 'react';
 import {
-    Dimensions,
-    Image,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
-} from 'react-native'
+  Animated,
+  Dimensions,
+  Easing,
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
-const { width, height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window');
 
-const OnboardingScreens = () => {
-  const navigation = useNavigation()
-  const scrollViewRef = useRef(null)
+const OnboardingScreen = () => {
+  const navigation = useNavigation();
 
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const circleOpacity = useRef(new Animated.Value(0)).current;
+  const circleScale = useRef(new Animated.Value(1)).current;
+  const circleTranslateY = useRef(new Animated.Value(-height / 2)).current;
 
-  const totalScreens = 6
+  const backgroundWhite = useRef(new Animated.Value(0)).current;
 
-  const handleNext = () => {
-    if (currentIndex < totalScreens - 1) {
-      const nextIndex = currentIndex + 1
-      setCurrentIndex(nextIndex)
-      scrollViewRef.current?.scrollTo({ x: nextIndex * width, animated: true })
-    }
-  }
+  const logoOpacity = useRef(new Animated.Value(0)).current;
+  const logoScale = useRef(new Animated.Value(1)).current;
 
-  const handleSkip = () => {
-    navigation.navigate('SignUp')
-  }
+  const topLogoOpacity = useRef(new Animated.Value(0)).current;
+  const topLogoScale = useRef(new Animated.Value(1)).current;
+
+  const tamilTextOpacity = useRef(new Animated.Value(0)).current;
+  const tamilTextTranslateY = useRef(new Animated.Value(30)).current;
+
+  const englishTextOpacity = useRef(new Animated.Value(0)).current;
+  const englishTextTranslateY = useRef(new Animated.Value(20)).current;
+
+  const buttonOpacity = useRef(new Animated.Value(0)).current;
+  const buttonScale = useRef(new Animated.Value(0.8)).current;
+
+  useEffect(() => {
+    startAnimationSequence();
+  }, []);
+
+  const startAnimationSequence = () => {
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(circleOpacity, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true
+        }),
+        Animated.timing(circleTranslateY, {
+          toValue: 0,
+          duration: 1200,
+          easing: Easing.out(Easing.exp),
+          useNativeDriver: true
+        })
+      ]),
+
+      Animated.delay(300),
+      Animated.timing(logoOpacity, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true
+      }),
+
+      Animated.delay(1000),
+      Animated.parallel([
+        Animated.timing(circleScale, {
+          toValue: 8, 
+          duration: 1200,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: true
+        }),
+        Animated.timing(backgroundWhite, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: false
+        }),
+        Animated.timing(logoOpacity, {
+          toValue: 0,
+          duration: 800,
+          useNativeDriver: true
+        })
+      ]),
+
+      Animated.delay(500),
+      Animated.parallel([
+        Animated.timing(tamilTextOpacity, {
+          toValue: 1,
+          duration: 1000,
+          easing: Easing.out(Easing.quad),
+          useNativeDriver: true
+        }),
+        Animated.spring(tamilTextTranslateY, {
+          toValue: 0,
+          tension: 50,
+          friction: 8,
+          useNativeDriver: true
+        })
+      ]),
+
+      Animated.delay(2000), 
+      Animated.parallel([
+        Animated.timing(tamilTextOpacity, {
+          toValue: 0,
+          duration: 600,
+          useNativeDriver: true
+        }),
+        Animated.timing(tamilTextTranslateY, {
+          toValue: -30,
+          duration: 600,
+          useNativeDriver: true
+        })
+      ]),
+
+      Animated.delay(300),
+      Animated.parallel([
+        Animated.timing(topLogoOpacity, {
+          toValue: 1,
+          duration: 600,
+          useNativeDriver: true
+        }),
+        Animated.spring(topLogoScale, {
+          toValue: 1,
+          tension: 80,
+          friction: 6,
+          useNativeDriver: true
+        })
+      ]),
+
+      Animated.delay(500),
+      Animated.parallel([
+        Animated.timing(englishTextOpacity, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true
+        }),
+        Animated.timing(englishTextTranslateY, {
+          toValue: 0,
+          duration: 800,
+          useNativeDriver: true
+        }),
+        Animated.timing(buttonOpacity, {
+          toValue: 1,
+          duration: 800,
+          useNativeDriver: true
+        }),
+        Animated.spring(buttonScale, {
+          toValue: 1,
+          tension: 100,
+          friction: 8,
+          useNativeDriver: true
+        })
+      ])
+    ]).start();
+  };
 
   const handleGetStarted = () => {
-    navigation.navigate('SignUp')
-  }
-
-  const handleScrollUpdate = event => {
-    const scrollX = event.nativeEvent.contentOffset.x
-    const newIndex = Math.round(scrollX / width)
-    if (newIndex !== currentIndex && newIndex >= 0 && newIndex < totalScreens) {
-      setCurrentIndex(newIndex)
-    }
-  }
-
-  const screens = [
-    {
-      backgroundColor: '#000',
-      content: (
-        <Image
-          source={require('../../assets/images/nunmamLogo.png')}
-          style={styles.imagelogo}
-          resizeMode='contain'
-        />
-      )
-    },
-    {
-      backgroundColor: '#000',
-      content: (
-        <View style={styles.centerContent}>
-          {' '}
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo}
-            resizeMode='contain'
-          />
-        </View>
-      )
-    },
-    {
-      backgroundColor: '#000',
-      content: (
-        <View style={styles.centerContent}>
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo}
-            resizeMode='contain'
-          />
-        </View>
-      )
-    },
-    {
-      backgroundColor: '#fff',
-      content: (
-        <View style={styles.centerContent}>
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo}
-            resizeMode='contain'
-          />
-          <Text style={styles.tamiltext}>
-            தமிழ் வரலாறு கதைகள் மற்றும்{'\n'}
-            இலக்கணங்களின் தொகுப்பு
-          </Text>
-        </View>
-      )
-    },
-    {
-      backgroundColor: '#fff',
-      content: (
-        <View style={styles.centerContent2}>
-          <Text style={styles.tamiltext}>
-            தமிழ் வரலாறு கதைகள் மற்றும்{'\n'}
-            இலக்கணங்களின் தொகுப்பு
-          </Text>
-        </View>
-      )
-    },
-    {
-      backgroundColor: '#fff',
-      content: (
-        <View style={styles.centerContent}>
-          <Image
-            source={require('../../assets/images/nunmamLogo.png')}
-            style={styles.imagelogo2}
-            resizeMode='contain'
-          />
-          <View
-            style={{ width: '100%', height: 5, backgroundColor: 'black' }}
-          ></View>
-          <Text style={styles.brandSubText}>
-            Lorem ipsum dolor sit amet consectetur. Tincidunt in blandit id
-            donec, aenean libero. Hendrerit nibh suspendisse.
-          </Text>
-          <TouchableOpacity
-            style={styles.getStartedButton}
-            onPress={handleGetStarted}
-          >
-            <Text style={styles.getStartedText}>Get Started</Text>
-          </TouchableOpacity>
-        </View>
-      )
-    }
-  ]
+    navigation.navigate('SignUp');
+  };
 
   return (
     <View style={styles.container}>
-      <StatusBar
-        barStyle={currentIndex < 3 ? 'light-content' : 'dark-content'}
-        backgroundColor={screens[currentIndex].backgroundColor}
+      <StatusBar barStyle='light-content' backgroundColor='#000' />
+
+      <Animated.View
+        style={[
+          StyleSheet.absoluteFill,
+          {
+            backgroundColor: backgroundWhite.interpolate({
+              inputRange: [0, 1],
+              outputRange: ['#000', '#fff']
+            }),
+            zIndex: -1
+          }
+        ]}
       />
 
-      <ScrollView
-        ref={scrollViewRef}
-        horizontal
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        scrollEnabled={true}
-        onScroll={handleScrollUpdate}
-        onMomentumScrollEnd={handleScrollUpdate}
-        scrollEventThrottle={16}
-        style={styles.scrollView}
-      >
-        {screens.map((screen, index) => (
-          <View
-            key={index}
-            style={[styles.screen, { backgroundColor: screen.backgroundColor }]}
-          >
-            {screen.content}
-          </View>
-        ))}
-      </ScrollView>
-
-      {/* Bottom Navigation Buttons */}
-      {currentIndex < totalScreens - 1 && (
-        <View style={styles.bottomNavigation}>
-          <TouchableOpacity
+      <View style={styles.screen}>
+        <View style={styles.animatedContainer}>
+          <Animated.View
             style={[
-              styles.navButton,
-              styles.skipButton,
-              { borderColor: currentIndex < 3 ? '#fff' : '#000' }
+              styles.animatedCircle,
+              {
+                opacity: circleOpacity,
+                transform: [
+                  { translateY: circleTranslateY },
+                  { scale: circleScale }
+                ]
+              }
             ]}
-            onPress={handleSkip}
           >
-            <Text
-              style={[
-                styles.skipButtonText,
-                { color: currentIndex < 3 ? '#fff' : '#000' }
-              ]}
+            <Animated.View
+              style={{
+                opacity: logoOpacity,
+                transform: [{ scale: logoScale }]
+              }}
             >
-              Skip
-            </Text>
-          </TouchableOpacity>
-
-          <View style={styles.dotsContainer}>
-            {screens.map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.dot,
-                  {
-                    backgroundColor:
-                      index === currentIndex
-                        ? currentIndex < 3
-                          ? '#fff'
-                          : '#000'
-                        : currentIndex < 3
-                        ? '#666'
-                        : '#ccc'
-                  }
-                ]}
+              <Image
+                source={require('../../assets/images/nunmamLogo.png')}
+                style={styles.logoImage}
+                resizeMode='contain'
               />
-            ))}
-          </View>
+            </Animated.View>
+          </Animated.View>
 
-          <TouchableOpacity
+          <Animated.View
             style={[
-              styles.navButton,
-              styles.nextButton,
-              { backgroundColor: currentIndex < 3 ? '#fff' : '#000' }
+              styles.logoContainer,
+              {
+                opacity: topLogoOpacity,
+                transform: [{ scale: topLogoScale }]
+              }
             ]}
-            onPress={handleNext}
           >
-            <Text
-              style={[
-                styles.nextButtonText,
-                { color: currentIndex < 3 ? '#000' : '#fff' }
-              ]}
-            >
-              Next
+            <Image
+              source={require('../../assets/images/nunmamLogo.png')}
+              style={styles.logoImage}
+              resizeMode='contain'
+            />
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.tamilTextContainer,
+              {
+                opacity: tamilTextOpacity,
+                transform: [{ translateY: tamilTextTranslateY }]
+              }
+            ]}
+          >
+            <Text style={styles.tamilText}>
+              தமிழ் வரலாறு கதைகள் மற்றும்{'\n'}
+              இலக்கணங்களின் தொகுப்பு
             </Text>
-          </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View
+            style={[
+              styles.englishTextContainer,
+              {
+                opacity: englishTextOpacity,
+                transform: [{ translateY: englishTextTranslateY }]
+              }
+            ]}
+          >
+            <View style={styles.separator} />
+            <Text style={styles.englishText}>
+              Lorem ipsum dolor sit amet consectetur. Tincidunt in blandit id
+              donec, aenean libero. Hendrerit nibh suspendisse.
+            </Text>
+          </Animated.View>
+          <Animated.View
+            style={[
+              styles.buttonContainer,
+              {
+                opacity: buttonOpacity,
+                transform: [{ scale: buttonScale }]
+              }
+            ]}
+          >
+            <TouchableOpacity
+              style={styles.getStartedButton}
+              onPress={handleGetStarted}
+            >
+              <Text style={styles.getStartedText}>Get Started</Text>
+            </TouchableOpacity>
+          </Animated.View>
         </View>
-      )}
+      </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  scrollView: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#000'
   },
   screen: {
-    width: width,
-    height: height,
+    width,
+    height,
     justifyContent: 'center',
     alignItems: 'center'
   },
-  centerContent: {
+  animatedContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 50,
-    height: 250,
-    widht: 170,
+    paddingHorizontal: 30
+  },
+  animatedCircle: {
+    width: 280,
+    height: 280,
+    borderRadius: 140,
     backgroundColor: 'white',
-    borderRadius: 150
-  },
-  centerContent2: {
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 30
-  },
-  centerContent1: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 90,
-    height: 300,
-    widht: 400,
-    backgroundColor: 'white',
-    borderRadius: 300
-  },
-  imagelogo: {
-    height: 150,
-    width: 150
-  },
-  imagelogo2: {
-    height: 150,
-    width: 150,
-    top: -150
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8
-  },
-  logoCircle: {},
-  logoLarge: {
-    width: 180,
-    height: 250,
-    borderRadius: 90
-  },
-  logoGlow: {
-    shadowColor: '#fff',
+    shadowColor: '#ffffff',
     shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.9,
-    shadowRadius: 50,
-    elevation: 40
+    shadowRadius: 30,
+    elevation: 20
   },
-  logoText: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#000',
-    transform: [{ rotate: '180deg' }]
+  logoContainer: {
+    position: 'absolute',
+    top: '20%',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
-  logoSubText: {
-    fontSize: 12,
-    color: '#000',
-    marginTop: 5,
-    letterSpacing: 1
+  logoImage: {
+    height: 120,
+    width: 120
   },
-  tamiltext: {
-    fontSize: 16,
+  tamilTextContainer: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  tamilText: {
+    fontSize: 20,
     color: '#000',
     textAlign: 'center',
-    marginTop: 20,
-    lineHeight: 24
+    lineHeight: 32,
+    fontWeight: '600'
   },
-  brandTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#000',
-    marginTop: 24,
-    textAlign: 'center'
+  englishTextContainer: {
+    position: 'absolute',
+    top: '45%',
+    alignItems: 'center',
+    width: '100%'
   },
-  brandSubText: {
+  separator: {
+    width: '80%',
+    height: 2,
+    backgroundColor: '#000',
+    marginBottom: 20
+  },
+  englishText: {
     fontSize: 14,
-    color: '#444',
+    color: '#333',
     textAlign: 'center',
-    marginTop: 10,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    lineHeight: 20
+  },
+  buttonContainer: {
+    position: 'absolute',
+    top: '70%'
   },
   getStartedButton: {
-    marginTop: 60,
     backgroundColor: '#000',
     borderRadius: 25,
     width: 250,
@@ -340,48 +360,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 16
-  },
-  bottomNavigation: {
-    position: 'absolute',
-    bottom: 50,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 30
-  },
-  navButton: {
-    borderRadius: 25,
-    paddingHorizontal: 20,
-    paddingVertical: 12,
-    minWidth: 80,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  skipButton: {
-    borderWidth: 1,
-    backgroundColor: 'transparent'
-  },
-  
-  skipButtonText: {
-    fontSize: 16,
-    fontWeight: '500'
-  },
-  nextButtonText: {
-    fontSize: 16,
-    fontWeight: '500'
-  },
-  dotsContainer: {
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginHorizontal: 4
   }
-})
+});
 
-export default OnboardingScreens
+export default OnboardingScreen;
